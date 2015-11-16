@@ -1,23 +1,24 @@
 
 package DaoImpl;
 
-import Dao.PersonaDao;
-import Beans.Persona;
+import Dao.VentaDao;
+import Beans.Venta;
 import conexion.conexionMYSQL;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonaDaoImpl implements PersonaDao{
-   
-conexionMYSQL cn = new conexionMYSQL();
 
+public class VentaDaoImpl implements VentaDao{
+
+conexionMYSQL cn = new conexionMYSQL();
+ 
     @Override
-    public boolean agregarpersona(Persona persona) {
-         boolean flat=false;
-        Statement st=null;
-        String query="INSERT INTO persona VALUES (0,'"+persona.getNombre()+"','"+persona.getApepat()+"','"+persona.getApemat()+"','"+persona.getFecha_nac()+"','"+persona.getSexo()+"','"+persona.getDni()+"','"+persona.getCelular()+"','"+persona.getTelefono()+"','"+persona.getDireccion()+"')";
+    public boolean agregarventa(Venta venta) {
+    boolean flat=false;
+    Statement st=null;
+    String query="INSERT INTO venta VALUES (null,'"+venta.getFecha_venta()+"','"+venta.getSerie_factura()+"','"+venta.getSubtotal()+"','"+venta.getIgv()+"','"+venta.getDescuento()+"','"+venta.getTotal()+"','"+venta.getId_usuario()+"','"+venta.getId_cliente()+"','"+venta.getHora()+"')";
         try {
             st=cn.conexion().createStatement();
             st.executeUpdate(query);
@@ -39,19 +40,16 @@ conexionMYSQL cn = new conexionMYSQL();
                     cn.conexion().close();
                 } catch (Exception e) {
                 }
-{
-                
-            }
+
                 }
-                 return flat;
-    }
+                 return flat;      
+    }    
 
     @Override
-    public boolean eliminarpersona(int id_persona) {
-        boolean flat=false;
-         
-       String query="DELETE FROM persona WHERE id_persona="+id_persona+"";
-       Statement st=null;
+    public boolean eliminarventa(int id_venta) {
+    boolean flat=false;
+    String query="DELETE FROM venta WHERE id_venta="+id_venta+"";
+    Statement st=null;
         try {
             st=cn.conexion().createStatement();
             st.executeUpdate(query);
@@ -64,20 +62,19 @@ conexionMYSQL cn = new conexionMYSQL();
             System.out.println("ERROR"+e.getMessage());
         }finally{
             if (cn.conexion()!=null) {
-                
-             
+              
             cn.cerrar();
-                
+               
             }
-        }
+        } 
        
-    return  flat;
+    return  flat;     
     }
 
     @Override
-    public boolean actualizarpersona(Persona persona) {
-               boolean flat=false;
-      String query="UPDATE persona SET nombre='"+persona.getNombre()+"',apepat='"+persona.getApepat()+"',apemat='"+persona.getApemat()+"',fecha_nac='"+persona.getFecha_nac()+"',sexo='"+persona.getSexo()+"',dni="+persona.getDni()+",celular='"+persona.getCelular()+"',telefono='"+persona.getTelefono()+"',direccion ='"+persona.getDireccion()+"' WHERE id_persona ="+persona.getId_persona()+"";
+    public boolean actualizarventa(Venta venta) {
+    boolean flat=false;
+    String query="UPDATE venta SET fecha_venta='"+venta.getFecha_venta()+"',serie_factura='"+venta.getSerie_factura()+"',subtotal='"+venta.getSubtotal()+"',igv='"+venta.getIgv()+"',descuento='"+venta.getDescuento()+"',total='"+venta.getTotal()+"',id_proveedor='"+venta.getId_usuario()+"',id_productos='"+venta.getId_cliente()+"',hora='"+venta.getHora()+"' WHERE id_venta ="+venta.getId_venta()+"";
         
         Statement st=null;
         try {
@@ -96,34 +93,33 @@ conexionMYSQL cn = new conexionMYSQL();
             }
         }
         
-         return flat;
+         return flat;    
     }
-
     @Override
-    public List<Persona> listarpersona() {
-        List<Persona> lista=null;
-        Statement st=null;
-        ResultSet rs=null;
-        Persona per=null;
-        String query="select * from persona";
+    public List<Venta> listarventa() {
+    List<Venta> lista=null;
+    Statement st=null;
+    ResultSet rs=null;
+    Venta venta=null;
+        String query="select * from venta";
         try {
             lista = new ArrayList<>();
             st= cn.conexion().createStatement();
             rs=st.executeQuery(query);
             while (rs.next()) {
                 
-                per =new Persona();
-                per.setId_persona(rs.getInt("id_persona"));
-                per.setNombre(rs.getString("nombre"));
-                per.setApepat(rs.getString("apepat"));
-                per.setApemat(rs.getNString("apemat"));
-//                per.setFecha_nac(rs.getNString("yyyy-mm-dd"));
-                per.setSexo(rs.getNString("sexo"));
-                per.setDni(rs.getInt("dni"));
-                per.setCelular(rs.getInt("celular"));
-                per.setTelefono(rs.getInt("telefono"));
-                per.setDireccion(rs.getString("direccion"));
-                lista.add(per);
+            venta = new Venta();
+            venta.setId_venta(rs.getInt("id_venta"));
+            venta.setFecha_venta(rs.getString("fecha_venta"));
+            venta.setSubtotal(rs.getDouble("subtotal"));
+            venta.setSerie_factura(rs.getNString("serie_factura"));
+            venta.setIgv(rs.getDouble("igv"));
+            venta.setDescuento(rs.getDouble("descuento"));
+            venta.setTotal(rs.getDouble("total"));
+            venta.setId_cliente(rs.getInt("id_cliente"));
+            venta.setId_usuario(rs.getInt("id_usuario"));
+            venta.setHora(rs.getNString("hora"));
+            lista.add(venta);
             }
             cn.cerrar();
         } catch (Exception e) {
@@ -132,5 +128,4 @@ conexionMYSQL cn = new conexionMYSQL();
            cn.cerrar();
         }
         return lista;
-    }
-}
+    } }

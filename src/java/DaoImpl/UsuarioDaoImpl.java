@@ -1,73 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package DaoImpl;
 
+package DaoImpl;
 import Dao.UsuarioDao;
 import Beans.Usuario;
-import coneccion_mysql.Coneccion_mysql;
-import java.sql.Connection;
+import conexion.conexionMYSQL;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author josue
- */
 public class UsuarioDaoImpl implements UsuarioDao{
 
-        public Connection conexion (){
-   Connection cn=Coneccion_mysql.conexion();
-    return cn;
-   }
-      public void cerrar(){
-       try {
-           Coneccion_mysql.conexion().close();
-       } catch (Exception e) {
-       }
-   
-   }
-   public void  restaurar(){
-       try {
-           Coneccion_mysql.conexion().rollback();
-       } catch (Exception e) {
-       }
-}
-   public void guardar(){
-       try {
-           Coneccion_mysql.conexion().commit();
-       } catch (Exception e) {
-       }
-}
-    
+conexionMYSQL cn = new conexionMYSQL();
     @Override
     public boolean agregarUsuario(Usuario usuario) {
     boolean flat=false;
         Statement st=null;
         String query="INSERT INTO usuario VALUES (0,'"+usuario.getUsuario()+"','"+usuario.getContraseña()+"','"+usuario.getRol()+"','"+usuario.getEstado()+"')";
         try {
-            st=conexion().createStatement();
+            st=cn.conexion().createStatement();
             st.executeUpdate(query);
             
-            conexion().getAutoCommit();
-            conexion().close();
+            cn.conexion().getAutoCommit();
+            cn.conexion().close();
             flat=true;
              } catch (Exception e) {
                  System.out.println("ERROR:"+e.getMessage());
                  try {
-                     conexion().rollback();
-                     conexion().close();
+                     cn.conexion().rollback();
+                     cn.conexion().close();
             } catch (Exception ex) {
             }
         }finally{
-            if (conexion() !=null) 
+            if (cn.conexion() !=null) 
                 try {
-                    conexion().rollback();
-                    conexion().close();
+                    cn.conexion().rollback();
+                    cn.conexion().close();
                 } catch (Exception e) {
                 }
 {
@@ -85,20 +52,20 @@ public class UsuarioDaoImpl implements UsuarioDao{
        String query="DELETE FROM usuario WHERE id_usuario="+id_usuario+"";
        Statement st=null;
         try {
-            st=conexion().createStatement();
+            st=cn.conexion().createStatement();
             st.executeUpdate(query);
-            guardar();
-            cerrar();
+            cn.guardar();
+            cn.cerrar();
             flat=true;
         } catch (Exception e) {
-            restaurar();
-            cerrar();
+            cn.restaurar();
+            cn.cerrar();
             System.out.println("ERROR"+e.getMessage());
         }finally{
-            if (conexion()!=null) {
+            if (cn.conexion()!=null) {
                 
              
-            cerrar();
+            cn.cerrar();
                 
             }
         }
@@ -118,18 +85,18 @@ public class UsuarioDaoImpl implements UsuarioDao{
         
         Statement st=null;
         try {
-            st=conexion().createStatement();
+            st=cn.conexion().createStatement();
             st.executeUpdate(query);
-            guardar();
-            cerrar();
+            cn.guardar();
+            cn.cerrar();
             flat=true;
         } catch (Exception e) {
-            restaurar();
-            cerrar();
+            cn.restaurar();
+            cn.cerrar();
             System.out.println("ERROR"+e.getMessage());
         }finally{
-            if (conexion()!=null) {
-                cerrar();
+            if (cn.conexion()!=null) {
+                cn.cerrar();
             }
         }
         
@@ -146,7 +113,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
         String query="select * from usuario";
         try {
             lista = new ArrayList<>();
-            st= conexion().createStatement();
+            st= cn.conexion().createStatement();
             rs=st.executeQuery(query);
             while (rs.next()) {
                 
@@ -158,11 +125,11 @@ public class UsuarioDaoImpl implements UsuarioDao{
                  usuario.setEstado(rs.getString("estado"));
                  lista.add(usuario);
             }
-            cerrar();
+            cn.cerrar();
         } catch (Exception e) {
             System.out.println("ERROR:"+e.getMessage());
             e.printStackTrace();
-           cerrar();
+           cn.cerrar();
         }
         return lista;
     }
@@ -174,7 +141,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
      Statement st;
      ResultSet rs;
         try {
-            st= conexion().createStatement();
+            st= cn.conexion().createStatement();
             rs=st.executeQuery(query);
             u = new Usuario();
             while (rs.next()) {
@@ -184,13 +151,13 @@ public class UsuarioDaoImpl implements UsuarioDao{
                 u.setRol(rs.getString("rol"));
                 u.setEstado(rs.getString("estado"));
             }
-            cerrar();
+            cn.cerrar();
         } catch (Exception e) {
             System.out.println("ERRROR: "+e.getMessage());
-            cerrar();
+            cn.cerrar();
         } finally{
-            if (conexion() != null) {
-                cerrar();
+            if (cn.conexion() != null) {
+                cn.cerrar();
             }
         }
     

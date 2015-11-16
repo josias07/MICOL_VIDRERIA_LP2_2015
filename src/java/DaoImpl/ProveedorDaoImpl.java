@@ -3,8 +3,7 @@ package DaoImpl;
 
 import Beans.Proveedor;
 import Dao.ProveedorDao;
-import coneccion_mysql.Coneccion_mysql;
-import java.sql.Connection;
+import conexion.conexionMYSQL;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -12,61 +11,31 @@ import java.util.List;
 
 public class ProveedorDaoImpl implements ProveedorDao{
     
-       
-    public Connection conexion (){
-   Connection cn=Coneccion_mysql.conexion();
-    return cn;
-   }
-      public void cerrar(){
-       try {
-           Coneccion_mysql.conexion().close();
-       } catch (Exception e) {
-       }
-   
-   }
-   public void  restaurar(){
-       try {
-           Coneccion_mysql.conexion().rollback();
-       } catch (Exception e) {
-       }
-}
-   public void guardar(){
-       try {
-           Coneccion_mysql.conexion().commit();
-       } catch (Exception e) {
-       }
-}
-   
-   
-   
-     
-       
-    
-
+conexionMYSQL cn = new conexionMYSQL();
     @Override
     public boolean agregarProveedor(Proveedor proveedor) {
       boolean flat=false;
         Statement st=null;
         String query="INSERT INTO persona VALUES (0,'"+proveedor.getNombre()+"','"+proveedor.getRuc()+"','"+proveedor.getTelefono()+"','"+proveedor.getRazon_social()+"','"+proveedor.getDireccion()+"')";
         try {
-            st=conexion().createStatement();
+            st=cn.conexion().createStatement();
             st.executeUpdate(query);
             
-            conexion().getAutoCommit();
-            conexion().close();
+            cn.conexion().getAutoCommit();
+            cn.conexion().close();
             flat=true;
              } catch (Exception e) {
                  System.out.println("ERROR:"+e.getMessage());
                  try {
-                     conexion().rollback();
-                     conexion().close();
+                     cn.conexion().rollback();
+                     cn.conexion().close();
             } catch (Exception ex) {
             }
         }finally{
-            if (conexion() !=null) 
+            if (cn.conexion() !=null) 
                 try {
-                    conexion().rollback();
-                    conexion().close();
+                    cn.conexion().rollback();
+                    cn.conexion().close();
                 } catch (Exception e) {
                 }
 {
@@ -86,7 +55,7 @@ public class ProveedorDaoImpl implements ProveedorDao{
         String query="select * from proveedor";
         try {
             lista = new ArrayList<>();
-            st= conexion().createStatement();
+            st= cn.conexion().createStatement();
             rs=st.executeQuery(query);
             while (rs.next()) {
                 
@@ -99,11 +68,11 @@ public class ProveedorDaoImpl implements ProveedorDao{
                  proveedor.setDireccion(rs.getString("direccion"));
                  lista.add(proveedor);
             }
-            cerrar();
+            cn.cerrar();
         } catch (Exception e) {
             System.out.println("ERROR:"+e.getMessage());
             e.printStackTrace();
-           cerrar();
+           cn.cerrar();
         }
         return lista;
     
