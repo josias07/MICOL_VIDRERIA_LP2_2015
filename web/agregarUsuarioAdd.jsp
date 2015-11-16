@@ -1,6 +1,6 @@
 
 
-<%@page import="Entidad.Usuario"%>
+<%@page import="Beans.Usuario"%>
 <%@page import="DaoImpl.UsuarioDaoImpl"%>
 <%@page import="Dao.UsuarioDao"%>
 <%

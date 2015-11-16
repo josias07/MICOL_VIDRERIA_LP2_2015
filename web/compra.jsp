@@ -1,6 +1,6 @@
 
 
-<%@include file="WEB-INF/fragmentos/top.jspf"%>
+<%@include file="WEB-INF/fragmentos/topadm.jspf"%>
 <%@page import="Beans.Proveedor"%>
 <%@page import="DaoImpl.ProveedorDaoImpl"%>
 <%@page import="Dao.ProveedorDao"%>

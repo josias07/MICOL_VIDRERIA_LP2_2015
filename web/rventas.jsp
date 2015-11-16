@@ -1,7 +1,7 @@
-<%@page import="Entidad.Venta"%>
+<%@page import="Beans.Venta"%>
 <%@page import="Dao.VentaDao"%>
 <%@page import="DaoImpl.VentaDaoImpl"%>
-<%@page import="Entidad.Productos"%>
+<%@page import="Beans.Productos"%>
 
 
 <%@include file="WEB-INF/fragmentos/topadm.jspf"%>

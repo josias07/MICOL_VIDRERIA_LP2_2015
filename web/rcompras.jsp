@@ -1,7 +1,7 @@
-<%@page import="Entidad.Compra"%>
+<%@page import="Beans.Compra"%>
 <%@page import="Dao.CompraDao"%>
 <%@page import="DaoImpl.CompraDaoImpl"%>
-<%@page import="Entidad.Productos"%>
+<%@page import="Beans.Productos"%>
 
 <%@include file="WEB-INF/fragmentos/topadm.jspf"%>
 <style type="text/css">
@@ -34,15 +34,11 @@
 			<tr class="active info">
                             
                                 <th class="text-center">ID</th>
-				<th class="text-center">Nombre</th>
 				<th class="text-center">Fecha</th>
 				<th class="text-center">Serie_factura</th>
 				<th class="text-center">Id_proveedor</th>
                                 <th class="text-center">Igv</th>
                                 <th class="text-center">Descuento</th>
-                                <th class="text-center">Subtotal</th>
-                                <th class="text-center">Total</th>
-                                <th class="text-center">Hora</th>
                         </tr>
                             <% 
                              for (Compra compra : dao.listarcompra()) {  
@@ -50,15 +46,11 @@
 
                         <tr class="text-center">
                                 <td><%=compra.getId_compra()%></td>
-                                <td><%=compra.getId_productos()%></td>
 				<td><%=compra.getFecha()%></td>
 				<td><%=compra.getSerie_factura()%></td>
                                 <td><%=compra.getId_proveedor()%></td>
                                 <td><%=compra.getIgv()%></td>
                                 <td><%=compra.getDescuento()%></td>
-				<td><%=compra.getSubtotal()%></td>
-                                <td><%=compra.getTotal()%></td>
-				<td><%=compra.getHora()%></td>
                                 
                                 <%}%>
                      </thead>
