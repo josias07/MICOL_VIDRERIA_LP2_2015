@@ -3,12 +3,14 @@ package DaoImpl;
 
 import Dao.Categoria_ProductoDao;
 import Beans.Categoria_Producto;
-import conexion.conexionMYSQL;
+import Conexion.Conexion;
+import conexion.conexionMYSQL2;
 import java.sql.Statement;
 
 
 public class Categoria_ProductoDaoImpl implements Categoria_ProductoDao{
-    conexionMYSQL cn = new conexionMYSQL();
+//    conexionMYSQL2 cn = new conexionMYSQL2();
+    Conexion cn = Conexion.getInstance();
 
     @Override
     public boolean agregarCategoria_Producto(Categoria_Producto categ_prod) {
@@ -20,20 +22,20 @@ public class Categoria_ProductoDaoImpl implements Categoria_ProductoDao{
             st.executeUpdate(query);
             
             cn.conexion().getAutoCommit();
-            cn.conexion().close();
+//            cn.conexion().close();
             flat=true;
              } catch (Exception e) {
                  System.out.println("ERROR:"+e.getMessage());
                  try {
                      cn.conexion().rollback();
-                     cn.conexion().close();
+//                     cn.conexion().close();
             } catch (Exception ex) {
             }
         }finally{
             if (cn.conexion() !=null) 
                 try {
                     cn.conexion().rollback();
-                    cn.conexion().close();
+//                    cn.conexion().close();
                 } catch (Exception e) {
                 }
 
@@ -51,17 +53,17 @@ public class Categoria_ProductoDaoImpl implements Categoria_ProductoDao{
             st=cn.conexion().createStatement();
             st.executeUpdate(query);
             cn.guardar();
-            cn.cerrar();
+//            cn.cerrar();
             flat=true;
         } catch (Exception e) {
             cn.restaurar();
-            cn.cerrar();
+//            cn.cerrar();
             System.out.println("ERROR"+e.getMessage());
         }finally{
             if (cn.conexion()!=null) {
                 
              
-            cn.cerrar();
+//            cn.cerrar();
                 
             }
         }
@@ -80,15 +82,15 @@ public class Categoria_ProductoDaoImpl implements Categoria_ProductoDao{
             st=cn.conexion().createStatement();
             st.executeUpdate(query);
             cn.guardar();
-            cn.cerrar();
+//            cn.cerrar();
             flat=true;
         } catch (Exception e) {
             cn.restaurar();
-            cn.cerrar();
+//            cn.cerrar();
             System.out.println("ERROR"+e.getMessage());
         }finally{
             if (cn.conexion()!=null) {
-                cn.cerrar();
+//                cn.cerrar();
             }
         }
         

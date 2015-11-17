@@ -2,7 +2,8 @@
 package DaoImpl;
 import Dao.UsuarioDao;
 import Beans.Usuario;
-import conexion.conexionMYSQL;
+import Conexion.Conexion;
+import conexion.conexionMYSQL2;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -10,7 +11,9 @@ import java.util.List;
 
 public class UsuarioDaoImpl implements UsuarioDao{
 
-conexionMYSQL cn = new conexionMYSQL();
+//conexionMYSQL2 cn = new conexionMYSQL2();
+    
+    Conexion cn = Conexion.getInstance();
     @Override
     public boolean agregarUsuario(Usuario usuario) {
     boolean flat=false;
@@ -21,20 +24,20 @@ conexionMYSQL cn = new conexionMYSQL();
             st.executeUpdate(query);
             
             cn.conexion().getAutoCommit();
-            cn.conexion().close();
+//            cn.conexion().close();
             flat=true;
              } catch (Exception e) {
                  System.out.println("ERROR:"+e.getMessage());
                  try {
                      cn.conexion().rollback();
-                     cn.conexion().close();
+//                     cn.conexion().close();
             } catch (Exception ex) {
             }
         }finally{
             if (cn.conexion() !=null) 
                 try {
                     cn.conexion().rollback();
-                    cn.conexion().close();
+//                    cn.conexion().close();
                 } catch (Exception e) {
                 }
 {
@@ -55,17 +58,17 @@ conexionMYSQL cn = new conexionMYSQL();
             st=cn.conexion().createStatement();
             st.executeUpdate(query);
             cn.guardar();
-            cn.cerrar();
+//            cn.cerrar();
             flat=true;
         } catch (Exception e) {
             cn.restaurar();
-            cn.cerrar();
+//            cn.cerrar();
             System.out.println("ERROR"+e.getMessage());
         }finally{
             if (cn.conexion()!=null) {
                 
              
-            cn.cerrar();
+//            cn.cerrar();
                 
             }
         }
@@ -88,15 +91,15 @@ conexionMYSQL cn = new conexionMYSQL();
             st=cn.conexion().createStatement();
             st.executeUpdate(query);
             cn.guardar();
-            cn.cerrar();
+//            cn.cerrar();
             flat=true;
         } catch (Exception e) {
             cn.restaurar();
-            cn.cerrar();
+//            cn.cerrar();
             System.out.println("ERROR"+e.getMessage());
         }finally{
             if (cn.conexion()!=null) {
-                cn.cerrar();
+//                cn.cerrar();
             }
         }
         
@@ -125,11 +128,11 @@ conexionMYSQL cn = new conexionMYSQL();
                  usuario.setEstado(rs.getString("estado"));
                  lista.add(usuario);
             }
-            cn.cerrar();
+//            cn.cerrar();
         } catch (Exception e) {
             System.out.println("ERROR:"+e.getMessage());
             e.printStackTrace();
-           cn.cerrar();
+//           cn.cerrar();
         }
         return lista;
     }
@@ -151,13 +154,13 @@ conexionMYSQL cn = new conexionMYSQL();
                 u.setRol(rs.getString("rol"));
                 u.setEstado(rs.getString("estado"));
             }
-            cn.cerrar();
+//            cn.cerrar();
         } catch (Exception e) {
             System.out.println("ERRROR: "+e.getMessage());
-            cn.cerrar();
+//            cn.cerrar();
         } finally{
             if (cn.conexion() != null) {
-                cn.cerrar();
+//                cn.cerrar();
             }
         }
     

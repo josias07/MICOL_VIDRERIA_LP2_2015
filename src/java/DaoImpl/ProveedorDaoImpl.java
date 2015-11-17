@@ -2,8 +2,9 @@
 package DaoImpl;
 
 import Beans.Proveedor;
+import Conexion.Conexion;
 import Dao.ProveedorDao;
-import conexion.conexionMYSQL;
+import conexion.conexionMYSQL2;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ import java.util.List;
 
 public class ProveedorDaoImpl implements ProveedorDao{
     
-conexionMYSQL cn = new conexionMYSQL();
+//conexionMYSQL2 cn = new conexionMYSQL2();
+    
+    Conexion cn = Conexion.getInstance();
     @Override
     public boolean agregarProveedor(Proveedor proveedor) {
       boolean flat=false;
@@ -22,20 +25,20 @@ conexionMYSQL cn = new conexionMYSQL();
             st.executeUpdate(query);
             
             cn.conexion().getAutoCommit();
-            cn.conexion().close();
+//            cn.conexion().close();
             flat=true;
              } catch (Exception e) {
                  System.out.println("ERROR:"+e.getMessage());
                  try {
                      cn.conexion().rollback();
-                     cn.conexion().close();
+//                     cn.conexion().close();
             } catch (Exception ex) {
             }
         }finally{
             if (cn.conexion() !=null) 
                 try {
                     cn.conexion().rollback();
-                    cn.conexion().close();
+//                    cn.conexion().close();
                 } catch (Exception e) {
                 }
 {
@@ -68,11 +71,11 @@ conexionMYSQL cn = new conexionMYSQL();
                  proveedor.setDireccion(rs.getString("direccion"));
                  lista.add(proveedor);
             }
-            cn.cerrar();
+//            cn.cerrar();
         } catch (Exception e) {
             System.out.println("ERROR:"+e.getMessage());
             e.printStackTrace();
-           cn.cerrar();
+//           cn.cerrar();
         }
         return lista;
     
