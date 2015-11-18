@@ -8,7 +8,8 @@ public class Compra {
     
     private int id_compra;
     private String fecha;
-    private String serie_factura;
+    private String comprobante;
+    private String serie;
     private double igv;
     private double descuento;
     private int id_proveedor;
@@ -34,14 +35,6 @@ public class Compra {
         this.fecha = fecha;
     }
 
-    public String getSerie_factura() {
-        return serie_factura;
-    }
-
-    public void setSerie_factura(String serie_factura) {
-        this.serie_factura = serie_factura;
-    }
-
     public double getIgv() {
         return igv;
     }
@@ -65,6 +58,22 @@ public class Compra {
 
     public void setId_proveedor(int id_proveedor) {
         this.id_proveedor = id_proveedor;
+    }
+
+    public String getComprobante() {
+        return comprobante;
+    }
+
+    public void setComprobante(String comprobante) {
+        this.comprobante = comprobante;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
     }
 
    

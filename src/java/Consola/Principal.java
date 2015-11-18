@@ -299,7 +299,7 @@ public class Principal {
     CompraDao dao=new CompraDaoImpl();
     Compra compra=new Compra();
     compra.setFecha("01/11/15");
-    compra.setSerie_factura(null);
+    compra.setComprobante(null);
     compra.setIgv(41.00);
     compra.setDescuento(17.00);
     compra.setId_proveedor(1);
@@ -326,7 +326,7 @@ public class Principal {
     CompraDao dao=new CompraDaoImpl();
     Compra compra=new Compra();
     compra.setFecha("01/11/15");
-    compra.setSerie_factura(null);
+    compra.setComprobante(null);
     compra.setIgv(41.00);
     compra.setDescuento(17.00);
     compra.setId_proveedor(1);
@@ -343,7 +343,7 @@ public class Principal {
         System.out.println("\n########################################");
         System.out.println("\nID:"+compra.getId_compra()+
                                "\nFECHA:"+compra.getFecha()+
-                               "\nSERIE_FCATURA:"+compra.getSerie_factura()+
+                               "\nSERIE_FCATURA:"+compra.getComprobante()+
                                "\nIGV:"+compra.getIgv()+
                                "\nDESCUENTO:"+compra.getDescuento()+
                                "\nPROVEEDOR:"+compra.getId_proveedor());

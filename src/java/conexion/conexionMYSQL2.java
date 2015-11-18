@@ -1,11 +1,11 @@
-
-package conexion;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-
-public class conexionMYSQL2 {
+//
+//package conexion;
+//
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//
+//
+//public class conexionMYSQL2 {
     
 //    public static Connection getConection(){
 //        Connection cn=null;
@@ -41,5 +41,5 @@ public class conexionMYSQL2 {
 //           conexionMYSQL2.getConection().commit();
 //       } catch (Exception e) {
 //       }
-//  }
-}
+////  }
+//}

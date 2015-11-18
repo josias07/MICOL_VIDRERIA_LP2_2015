@@ -34,7 +34,7 @@
                 Productos <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-               <li><a href="">Registrar Productos</a></li>
+               <li><a href="registra_producto.jsp">Registrar Productos</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -50,7 +50,7 @@
                 Compras<span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-               <li><a href="">Registrar Compras</a></li>
+               <li><a href="compra.jsp">Registrar Compras</a></li>
               </ul>
             </li>
             <li class="dropdown">

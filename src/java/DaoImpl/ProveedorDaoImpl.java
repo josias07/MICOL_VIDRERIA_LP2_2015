@@ -2,7 +2,7 @@
 package DaoImpl;
 
 import Beans.Proveedor;
-import Conexion.Conexion;
+import conexion.Conexion;
 import Dao.ProveedorDao;
 import java.sql.ResultSet;
 import java.sql.Statement;

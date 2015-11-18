@@ -3,7 +3,7 @@ package DaoImpl;
 
 import Dao.VentaDao;
 import Beans.Venta;
-import Conexion.Conexion;
+import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;

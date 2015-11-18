@@ -79,7 +79,7 @@
                  }
                  
              }else{
-                 out.print("No existe en la bd");
+                 out.print("<div class='alert-danger'>No existe en la bd</div>");
              }
          }
          
@@ -94,7 +94,7 @@
   			</div>
 		</div>
     </div>
-     
+</div>  
 <script type="text/javascript" src="jquery/jquery-2.1.4.min.js"></script>
 
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.jsjavascript"></script>

@@ -11,10 +11,20 @@
 <%@page import="DaoImpl.CompraDaoImpl"%>
 <%@page import="Dao.CompraDao"%>
 
-<div class="modal fade" id="reee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+ <!--  <div class="modal fade" id="reee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+  -->
+        <%!
+            String buscar;
+        %>
+        <%
+            buscar = request.getParameter("buscar");
+            if (buscar == null) {
+                buscar = "";
+            }
 
+        %>
         
         <div class="modal-header" style="padding:35px 50px;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -43,8 +53,13 @@
 
                                     </select>
                                 </td>
-                            </tr>           
-           
+                            </tr>  
+                             <tr>
+                <td align="right">
+                    <input type="text" name="buscar" value="<%=buscar%>" placeholder="Buscar" size="15"/>
+                    <input type="submit" name="" value="Buscar"/>
+                </td>
+                 </tr>
 
                           <tr>
                           <div class="form-group">
