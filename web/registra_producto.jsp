@@ -131,7 +131,7 @@
 
                 </section>
 
-                <input type="hidden" name="opcion" value="RegistrarCompra">
+                <input type="hidden" name="opcion" value="Registrar">
                 <table class="table table-bordered table-hover modal-content">
 
 
@@ -146,7 +146,7 @@
                             <th class="text-center">Categoria</th>
                             <th class="text-center">Unidad_Medida</th>
                             <th class="text-center">Descripcion</th>
-                            <th colspan="2" class="text-center" name="opcon">Opcion</th>
+                            <th colspan="2" class="text-center" name="opcion">Opcion</th>
                         </tr>
                         <%
                             for (Productos pro : dao.listarproductos()) {

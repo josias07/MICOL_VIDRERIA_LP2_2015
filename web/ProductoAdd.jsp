@@ -4,10 +4,7 @@
 <%@page import="DaoImpl.ProductosDaoImpl"%>
 <%@page import="Dao.ProductosDao"%>
 
-<%
 
-    String persona;
-%>
 
 <%
     ProductosDao dao = new ProductosDaoImpl();
