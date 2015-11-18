@@ -2,6 +2,7 @@
 package Consola;
 
 import Beans.Categoria_Producto;
+import Beans.Cliente;
 import Beans.Compra;
 import Dao.PersonaDao;
 import Dao.UsuarioDao;
@@ -13,10 +14,12 @@ import Beans.Productos;
 import Beans.Usuario;
 import Beans.Venta;
 import Dao.Categoria_ProductoDao;
+import Dao.ClienteDao;
 import Dao.CompraDao;
 import Dao.ProductosDao;
 import Dao.VentaDao;
 import DaoImpl.Categoria_ProductoDaoImpl;
+import DaoImpl.ClienteDaoImpl;
 import DaoImpl.CompraDaoImpl;
 import DaoImpl.ProductosDaoImpl;
 import DaoImpl.VentaDaoImpl;
@@ -45,11 +48,10 @@ public class Principal {
 //        p.actualizarCategoria_Producto();
 //          p.listarCompra();
          
+          //***********cliente********
+          p.agregarCliente();
     }
-    
-    
-    
-    
+
     
     //************PERSONA**************//
     public void agregarPersona(){
@@ -390,6 +392,32 @@ public class Principal {
         System.out.println("\n########################################");  
         }
 
-    }  
-}
+    }
+      
+//*********************cliente**************
+        
+        public void agregarCliente(){
+            ClienteDao dao= new ClienteDaoImpl();
+            Cliente cliente =new Cliente();
+            
+            cliente.setId_persona(001);
+            cliente.setId_cliente(1);
+            cliente.setEstado("1");
+            
+            if(dao.agregarCliente(cliente)){
+                System.out.println("se registro correctamente");
+            }else{
+                System.out.println("ocurrio un error al registarse");
+            }
+        }
+        
+        public void actualizarCliente(){
+            ClienteDao dao = new ClienteDaoImpl();
+            Cliente cliente =new Cliente();
+            
+         
+            }
+        
+        }
+
 

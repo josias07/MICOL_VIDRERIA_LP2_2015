@@ -15,9 +15,7 @@ import java.util.List;
  */
 public interface ClienteDao {
     
-    public boolean registrarCliente(Cliente cliente);
-    public List<Cliente> listarCliente();
-    public boolean eliminarCliente(int id);
+    public boolean agregarCliente(Cliente cliente);
     public boolean actualizarCliente(Cliente cliente);
     }
     

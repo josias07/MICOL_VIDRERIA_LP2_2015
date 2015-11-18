@@ -4,7 +4,6 @@ package DaoImpl;
 import Beans.Proveedor;
 import Conexion.Conexion;
 import Dao.ProveedorDao;
-import conexion.conexionMYSQL2;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;

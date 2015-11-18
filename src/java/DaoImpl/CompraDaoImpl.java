@@ -3,7 +3,6 @@ package DaoImpl;
 import Beans.Compra;
 import Conexion.Conexion;
 import Dao.CompraDao;
-import conexion.conexionMYSQL2;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -17,7 +16,8 @@ public class CompraDaoImpl implements CompraDao{
     public boolean agregarCompra(Compra compra) {
        boolean flat=false;
         Statement st=null;
-        String query="INSERT INTO compra VALUES (0,'"+compra.getFecha()+"','"+compra.getSerie_factura()+"','"+compra.getIgv()+"','"+compra.getDescuento()+"','"+compra.getId_proveedor()+"')";
+        String query="INSERT INTO compra VALUES (0,'"+compra.getFecha()+"','"+compra.getSerie_factura()+
+                     "','"+compra.getIgv()+"','"+compra.getDescuento()+"','"+compra.getId_proveedor()+"')";
         try {
             st=cn.conexion().createStatement();
             st.executeUpdate(query);

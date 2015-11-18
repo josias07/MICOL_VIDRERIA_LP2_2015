@@ -4,7 +4,6 @@ package DaoImpl;
 import Dao.Categoria_ProductoDao;
 import Beans.Categoria_Producto;
 import Conexion.Conexion;
-import conexion.conexionMYSQL2;
 import java.sql.Statement;
 
 

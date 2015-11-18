@@ -5,8 +5,8 @@ import java.sql.*;
 public class Conexion {
 
     private static Connection cn = null;
-    private static Statement st = null;
-    private static ResultSet rs = null;
+    private static final Statement st = null;
+    private static final ResultSet rs = null;
     private static String MError = new String();
     private static CallableStatement cst = null;
     private static Conexion INSTANCE = null;
