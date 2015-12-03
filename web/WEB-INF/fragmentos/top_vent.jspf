@@ -7,7 +7,6 @@
 	<title></title>
   <link rel="shortcut icon" href="imagen/001.jpg">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="estilos/menu.css">
 </head>
 <body>
     
@@ -44,7 +43,6 @@
               <ul class="dropdown-menu" role="menu">
                <li><a href="venta_1.jsp">Registrar Ventas</a></li>
                <li><a href="Venta_2.jsp">Registrar Ventas2</a></li>
-               <li><a href="ventas.jsp">Registrar Ventas</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -68,8 +66,9 @@
                 Reportes <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
+                <li><a href="rcompras.jsp">Reporte de Compras</a></li>
                 <li><a href="rventas.jsp">Reporte de Ventas</a></li>
-                <li><a href="reporte.jsp">Reporte de Compras</a></li>
+                <li><a href="reporte.jsp">Reporte</a></li>
               </ul>
             </li>
             <li><a href="logeo.jsp?salir=cerrar" class="glyphicon glyphicon-off">Salir</a></li>

@@ -1,4 +1,4 @@
-     <%@include file="WEB-INF/fragmentos/topsec.jspf"%>
+<%@include file="WEB-INF/fragmentos/topsec.jspf"%>
 
 
      <nav class="carousel"> 

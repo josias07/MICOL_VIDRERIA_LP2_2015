@@ -1,6 +1,17 @@
 <style>
-
-</style>
+    footer{
+        width: 100%;
+	height: 30px;
+	background: #333;
+	color: #fff;
+	position: fixed; 
+        padding: 7px;
+        bottom: 0px;
+    }
+    footer .contenedor > p{
+            text-align: center;
+    }
+</style> 
 <footer >
         <div>&copy; Hecho por Hacksystem - 2015</div>
         

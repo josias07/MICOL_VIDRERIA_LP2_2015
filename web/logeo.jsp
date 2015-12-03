@@ -71,15 +71,15 @@
              if (u.getUsuario() != null){
                  session.setAttribute("usuario", u.getUsuario());
                  
-                 if(u.getRol().equals("administrador")){
+                 if(u.getRol().equals("Administrador")){
                      response.sendRedirect("adm.jsp");
                  }
-                 if(u.getRol().equals("secretaria")){
+                 if(u.getRol().equals("Secretaria")){
                      response.sendRedirect("sec.jsp");
                  }
                  
              }else{
-                 out.print("<div class='alert-danger'>No existe en la bd</div>");
+                 
              }
          }
          
