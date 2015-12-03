@@ -4,25 +4,23 @@ package Beans;
 
 
 public class Persona {
-    private int id_persona;
+    private String  id_persona;
     private String nombre;
     private String apepat;
     private String apemat;
-    private String fecha_nac;
     private String sexo;
-    private int dni;
-    private int celular ;
-    private int telefono;
+    private String  dni;
+    private String  celular ;
     private String direccion;
 
     public Persona() {
     }
 
-    public int getId_persona() {
+    public String getId_persona() {
         return id_persona;
     }
 
-    public void setId_persona(int id_persona) {
+    public void setId_persona(String id_persona) {
         this.id_persona = id_persona;
     }
 
@@ -50,13 +48,6 @@ public class Persona {
         this.apemat = apemat;
     }
 
-    public String getFecha_nac() {
-        return fecha_nac;
-    }
-
-    public void setFecha_nac(String fecha_nac) {
-        this.fecha_nac = fecha_nac;
-    }
 
     public String getSexo() {
         return sexo;
@@ -66,28 +57,20 @@ public class Persona {
         this.sexo = sexo;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
-    }
-
-    public int getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
     }
 
     public String getDireccion() {
@@ -98,5 +81,4 @@ public class Persona {
         this.direccion = direccion;
     }
 
-    
 }

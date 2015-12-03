@@ -3,22 +3,22 @@ package Beans;
 
 
 public class Detalle_venta {
-    private int id_detalle_venta;
+    private String id_detalle_venta;
     private String descripcion;
-    private int cantidad;
-    private double precio_unitario;
-    private double importe;
-    private int id_venta;
-    private int id_producto_stock;
+    private String cantidad;
+    private String precio_unitario;
+    private String importe;
+    private String id_venta;
+    private String id_productos, id_usuario;
 
     public Detalle_venta() {
     }
 
-    public int getId_detalle_venta() {
+    public String getId_detalle_venta() {
         return id_detalle_venta;
     }
 
-    public void setId_detalle_venta(int id_detalle_venta) {
+    public void setId_detalle_venta(String id_detalle_venta) {
         this.id_detalle_venta = id_detalle_venta;
     }
 
@@ -30,46 +30,55 @@ public class Detalle_venta {
         this.descripcion = descripcion;
     }
 
-    public int getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio_unitario() {
+    public String getPrecio_unitario() {
         return precio_unitario;
     }
 
-    public void setPrecio_unitario(double precio_unitario) {
+    public void setPrecio_unitario(String precio_unitario) {
         this.precio_unitario = precio_unitario;
     }
 
-    public double getImporte() {
+    public String getImporte() {
         return importe;
     }
 
-    public void setImporte(double importe) {
+    public void setImporte(String importe) {
         this.importe = importe;
     }
 
-    public int getId_venta() {
+    public String getId_venta() {
         return id_venta;
     }
 
-    public void setId_venta(int id_venta) {
+    public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
     }
 
-    public int getId_producto_stock() {
-        return id_producto_stock;
+    public String getId_productos() {
+        return id_productos;
     }
 
-    public void setId_producto_stock(int id_producto_stock) {
-        this.id_producto_stock = id_producto_stock;
+    public void setId_productos(String id_productos) {
+        this.id_productos = id_productos;
     }
-    
+
+    public String getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+   
     
     
 }

@@ -42,8 +42,6 @@
                 Ventas<span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-               <li><a href="venta_1.jsp">Registrar Ventas</a></li>
-               <li><a href="Venta_2.jsp">Registrar Ventas2</a></li>
                <li><a href="ventas.jsp">Registrar Ventas</a></li>
               </ul>
             </li>

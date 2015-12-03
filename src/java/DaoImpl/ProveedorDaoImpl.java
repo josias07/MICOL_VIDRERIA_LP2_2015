@@ -4,6 +4,7 @@ package DaoImpl;
 import Beans.Proveedor;
 import conexion.Conexion;
 import Dao.ProveedorDao;
+import conexion.Configuracion;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -11,74 +12,82 @@ import java.util.List;
 
 public class ProveedorDaoImpl implements ProveedorDao{
     
-//conexionMYSQL2 cn = new conexionMYSQL2();
-    
-    Conexion cn = Conexion.getInstance();
+    Conexion cn = Configuracion.Vidreria();
     @Override
     public boolean agregarProveedor(Proveedor proveedor) {
-      boolean flat=false;
-        Statement st=null;
-        String query="INSERT INTO persona VALUES (0,'"+proveedor.getNombre()+"','"+proveedor.getRuc()+"','"+proveedor.getTelefono()+"','"+proveedor.getRazon_social()+"','"+proveedor.getDireccion()+"')";
+
+        String query="INSERT INTO proveedor (id_proveedor,nombre,ruc,telefono,razon_social,direccion)"
+                + "VALUES ('" + proveedor.getNombre()
+                + "," + proveedor.getRuc()
+                + "," + proveedor.getTelefono()
+                + "," + proveedor.getRazon_social()
+                + "," + proveedor.getDireccion()+"')";
+        System.out.println(query);
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            
-            cn.conexion().getAutoCommit();
-//            cn.conexion().close();
-            flat=true;
-             } catch (Exception e) {
-                 System.out.println("ERROR:"+e.getMessage());
-                 try {
-                     cn.conexion().rollback();
-//                     cn.conexion().close();
-            } catch (Exception ex) {
-            }
-        }finally{
-            if (cn.conexion() !=null) 
-                try {
-                    cn.conexion().rollback();
-//                    cn.conexion().close();
-                } catch (Exception e) {
-                }
-{
-                
-            }
-                }
-                 return flat;
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
+        }
     
     }
+    
+    @Override
+    public boolean eliminarproveedor(String id_proveedor) {
+        boolean flat = false;
+        String query = "DELETE FROM proveedor WHERE id_proveedor=" + id_proveedor + "";
+        try {
+            cn.execC(query);
+            cn.Commit();
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+            return false;
+        }    }
+
+    @Override
+    public boolean actualizarproveedor(Proveedor proveedor) {
+        boolean flat = false;
+        String query = "UPDATE productos SET nombre='" + proveedor.getNombre() + "',"
+                + "ruc='" + proveedor.getRuc()+ "',"
+                + "telefono='" + proveedor.getTelefono() + "',"
+                + "razon_social='" + proveedor.getRazon_social()+ "',"
+                + "direccion='" + proveedor.getDireccion()
+                + "' WHERE id_proveedor =" + proveedor.getId_proveedor();
+
+        try {
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
+        }    }
 
     @Override
     public List<Proveedor> listarProveedor() {
     List<Proveedor> lista=null;
-        Statement st=null;
-        ResultSet rs=null;
-        Proveedor proveedor=null;
-        String query="select * from proveedor";
-        try {
-            lista = new ArrayList<>();
-            st= cn.conexion().createStatement();
-            rs=st.executeQuery(query);
-            while (rs.next()) {
-                
-                proveedor =new Proveedor();
-                 proveedor.setId_proveedor(rs.getInt("id_proveedor"));
-                 proveedor.setNombre(rs.getString("nombre"));
-                 proveedor.setRuc(rs.getInt("ruc"));
-                 proveedor.setTelefono(rs.getInt("telefono"));
-                 proveedor.setRazon_social(rs.getString("razon_social"));
-                 proveedor.setDireccion(rs.getString("direccion"));
-                 lista.add(proveedor);
-            }
-//            cn.cerrar();
-        } catch (Exception e) {
-            System.out.println("ERROR:"+e.getMessage());
-            e.printStackTrace();
-//           cn.cerrar();
+        String query = "select * from categoria_prod";
+        System.out.println(query);
+        lista = new ArrayList<Proveedor>();
+        cn.execQuery(query);
+        while (cn.getNext()) {
+            Proveedor prove = new Proveedor();
+            prove.setId_proveedor(cn.getCol("id_proveedor"));
+            prove.setRuc(cn.getCol("ruc"));
+            prove.setTelefono(cn.getCol("telefono"));
+            prove.setRazon_social(cn.getCol("razon_social"));
+            prove.setDireccion(cn.getCol("direccion"));
+            lista.add(prove);
         }
-        return lista;
-    
-    }
-   
+//
+    return lista ;
 
+    }
 }

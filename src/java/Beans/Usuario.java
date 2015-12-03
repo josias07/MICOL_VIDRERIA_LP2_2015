@@ -4,7 +4,7 @@ package Beans;
 
 public class Usuario {
     
-    private int id_usuario;
+    private String id_usuario;
     private String usuario;
     private String contraseña;
     private String rol;
@@ -13,13 +13,6 @@ public class Usuario {
     public Usuario() {
     }
 
-    public int getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
-    }
 
     public String getUsuario() {
         return usuario;
@@ -51,6 +44,14 @@ public class Usuario {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     

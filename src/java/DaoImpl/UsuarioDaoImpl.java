@@ -1,8 +1,11 @@
 
+
 package DaoImpl;
 import Dao.UsuarioDao;
 import Beans.Usuario;
 import conexion.Conexion;
+import conexion.Configuracion;
+import conexion.conexionMYSQL2;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -10,69 +13,40 @@ import java.util.List;
 
 public class UsuarioDaoImpl implements UsuarioDao{
 
-//conexionMYSQL2 cn = new conexionMYSQL2();
-    
-    Conexion cn = Conexion.getInstance();
+conexionMYSQL2 ms = new conexionMYSQL2();
+Conexion cn = Configuracion.Vidreria();
+//    Conexion cn = Conexion.getInstance();
     @Override
     public boolean agregarUsuario(Usuario usuario) {
-    boolean flat=false;
-        Statement st=null;
-        String query="INSERT INTO usuario VALUES (0,'"+usuario.getUsuario()+"','"+usuario.getContraseña()+"','"+usuario.getRol()+"','"+usuario.getEstado()+"')";
+        String query="INSERT INTO usuario VALUES ('"+usuario.getId_usuario()+"','"+usuario.getUsuario()+"','"+usuario.getContraseña()+"','"+usuario.getRol()+"','"+usuario.getEstado()+"')";
+
+        System.out.println(query);
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            
-            cn.conexion().getAutoCommit();
-//            cn.conexion().close();
-            flat=true;
-             } catch (Exception e) {
-                 System.out.println("ERROR:"+e.getMessage());
-                 try {
-                     cn.conexion().rollback();
-//                     cn.conexion().close();
-            } catch (Exception ex) {
-            }
-        }finally{
-            if (cn.conexion() !=null) 
-                try {
-                    cn.conexion().rollback();
-//                    cn.conexion().close();
-                } catch (Exception e) {
-                }
-{
-                
-            }
-                }
-                 return flat;
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
+        }
     }
 
     @Override
-    public boolean eliminarUsuario(int id_usuario) {
+    public boolean eliminarUsuario(String id_usuario) {
     
     boolean flat=false;
          
        String query="DELETE FROM usuario WHERE id_usuario="+id_usuario+"";
-       Statement st=null;
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            cn.guardar();
-//            cn.cerrar();
-            flat=true;
-        } catch (Exception e) {
-            cn.restaurar();
-//            cn.cerrar();
-            System.out.println("ERROR"+e.getMessage());
-        }finally{
-            if (cn.conexion()!=null) {
-                
-             
-//            cn.cerrar();
-                
-            }
+            cn.execC(query);
+            cn.Commit();
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+            return false;
         }
-       
-    return  flat;
     }
 
     @Override
@@ -84,25 +58,17 @@ public class UsuarioDaoImpl implements UsuarioDao{
               + "                      rol='"+usuario.getRol()+"',"
               + "                      estado='"+usuario.getEstado()+"' "
               + "                             WHERE id_usuario ="+usuario.getId_usuario()+"";
-        
-        Statement st=null;
+
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            cn.guardar();
-//            cn.cerrar();
-            flat=true;
-        } catch (Exception e) {
-            cn.restaurar();
-//            cn.cerrar();
-            System.out.println("ERROR"+e.getMessage());
-        }finally{
-            if (cn.conexion()!=null) {
-//                cn.cerrar();
-            }
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
         }
-        
-         return flat;
     }
 
     @Override
@@ -113,57 +79,51 @@ public class UsuarioDaoImpl implements UsuarioDao{
         ResultSet rs=null;
         Usuario usuario=null;
         String query="select * from usuario";
-        try {
-            lista = new ArrayList<>();
-            st= cn.conexion().createStatement();
-            rs=st.executeQuery(query);
-            while (rs.next()) {
-                
+        System.out.println(query);
+        lista = new ArrayList<Usuario>();
+        cn.execQuery(query);
+        while (cn.getNext()) {
                 usuario =new Usuario();
-                 usuario.setId_usuario(rs.getInt("id_usuario"));
-                 usuario.setUsuario(rs.getString("usuario"));
-                 usuario.setContraseña(rs.getString("contraseña"));
-                 usuario.setRol(rs.getString("rol"));
-                 usuario.setEstado(rs.getString("estado"));
+                 usuario.setId_usuario(cn.getCol("id_usuario"));
+                 usuario.setUsuario(cn.getCol("usuario"));
+                 usuario.setContraseña(cn.getCol("contraseña"));
+                 usuario.setRol(cn.getCol("rol"));
+                 usuario.setEstado(cn.getCol("estado"));
                  lista.add(usuario);
-            }
-//            cn.cerrar();
-        } catch (Exception e) {
-            System.out.println("ERROR:"+e.getMessage());
-            e.printStackTrace();
-//           cn.cerrar();
-        }
+
+     }
         return lista;
-    }
+  }
 
     @Override
     public Usuario validarUsuario(String usuario, String contraseña) {
+        conexionMYSQL2 ms = new conexionMYSQL2();
      Usuario u = null;
      String query = "select  * from usuario where usuario='"+usuario+"' and contraseña= '"+contraseña+"'";
      Statement st;
      ResultSet rs;
         try {
-            st= cn.conexion().createStatement();
+            st= ms.conexion().createStatement();
             rs=st.executeQuery(query);
             u = new Usuario();
             while (rs.next()) {
-                u.setId_usuario(rs.getInt("id_usuario"));
+                u.setId_usuario(rs.getString("id_usuario"));
                 u.setUsuario(rs.getString("usuario"));
                 u.setContraseña(rs.getString("contraseña"));
                 u.setRol(rs.getString("rol"));
                 u.setEstado(rs.getString("estado"));
             }
-//            cn.cerrar();
+            ms.cerrar();
         } catch (Exception e) {
             System.out.println("ERRROR: "+e.getMessage());
-//            cn.cerrar();
+            ms.cerrar();
         } finally{
-            if (cn.conexion() != null) {
-//                cn.cerrar();
+            if (ms.conexion() != null) {
+                ms.cerrar();
             }
         }
     
     return u;
-    }
-    
+    }    
 }
+

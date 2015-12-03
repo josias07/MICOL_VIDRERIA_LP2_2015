@@ -4,26 +4,26 @@ package Beans;
 
 
 public class Cliente {
-    private int id_cliente;
-    private int id_persona;
+    private String id_cliente;
+    private String id_persona;
     private String estado;
 
     public Cliente() {
     }
 
-    public int getId_cliente() {
+    public String getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
+    public void setId_cliente(String id_cliente) {
         this.id_cliente = id_cliente;
     }
 
-    public int getId_persona() {
+    public String getId_persona() {
         return id_persona;
     }
 
-    public void setId_persona(int id_persona) {
+    public void setId_persona(String id_persona) {
         this.id_persona = id_persona;
     }
 
@@ -34,7 +34,5 @@ public class Cliente {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-    
+
 }

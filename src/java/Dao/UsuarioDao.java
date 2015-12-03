@@ -15,7 +15,7 @@ import java.util.List;
 public interface UsuarioDao {
     
     public boolean agregarUsuario(Usuario usuario);
-     public boolean eliminarUsuario(int id_usuario);
+     public boolean eliminarUsuario(String id_usuario);
     public boolean actualizarUsuario(Usuario usuario);
     public List<Usuario> listarUsuario();
     

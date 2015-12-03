@@ -3,21 +3,21 @@ package Beans;
 
 
 public class Proveedor {
-    private int id_proveedor;
+    private String id_proveedor;
     private String nombre;
-    private int ruc;
-    private int telefono;
+    private String ruc;
+    private String telefono;
     private String razon_social;
     private String direccion;
 
     public Proveedor() {
     }
 
-    public int getId_proveedor() {
+    public String getId_proveedor() {
         return id_proveedor;
     }
 
-    public void setId_proveedor(int id_proveedor) {
+    public void setId_proveedor(String id_proveedor) {
         this.id_proveedor = id_proveedor;
     }
 
@@ -29,19 +29,19 @@ public class Proveedor {
         this.nombre = nombre;
     }
 
-    public int getRuc() {
+    public String getRuc() {
         return ruc;
     }
 
-    public void setRuc(int ruc) {
+    public void setRuc(String ruc) {
         this.ruc = ruc;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -60,6 +60,7 @@ public class Proveedor {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    
-  
+
+
+
 }

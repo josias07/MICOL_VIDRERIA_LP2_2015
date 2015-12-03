@@ -4,7 +4,7 @@ package Beans;
 
 public class Unidad_medida {
    
-    private int id_unidad_medida;
+    private String id_unidad_medida;
     private String nombre_uni;
     private String descripcion;
     private String abreviatura;
@@ -12,13 +12,6 @@ public class Unidad_medida {
     public Unidad_medida() {
     }
 
-    public int getId_unidad_medida() {
-        return id_unidad_medida;
-    }
-
-    public void setId_unidad_medida(int id_unidad_medida) {
-        this.id_unidad_medida = id_unidad_medida;
-    }
 
     public String getNombre_uni() {
         return nombre_uni;
@@ -42,6 +35,14 @@ public class Unidad_medida {
 
     public void setAbreviatura(String abreviatura) {
         this.abreviatura = abreviatura;
+    }
+
+    public String getId_unidad_medida() {
+        return id_unidad_medida;
+    }
+
+    public void setId_unidad_medida(String id_unidad_medida) {
+        this.id_unidad_medida = id_unidad_medida;
     }
     
     

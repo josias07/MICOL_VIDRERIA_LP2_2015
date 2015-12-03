@@ -1,4 +1,3 @@
-
 package DaoImpl;
 
 import Dao.PersonaDao;
@@ -9,129 +8,96 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonaDaoImpl implements PersonaDao{
-   
-//conexionMYSQL2 cn = new conexionMYSQL2();
+public class PersonaDaoImpl implements PersonaDao {
 
+//conexionMYSQL2 cn = new conexionMYSQL2();
     Conexion cn = Conexion.getInstance();
+
     @Override
     public boolean agregarpersona(Persona persona) {
-         boolean flat=false;
-        Statement st=null;
-        String query="INSERT INTO persona VALUES (0,'"+persona.getNombre()+"','"+persona.getApepat()+"','"+persona.getApemat()+"','"+persona.getFecha_nac()+"','"+persona.getSexo()+"','"+persona.getDni()+"','"+persona.getCelular()+"','"+persona.getTelefono()+"','"+persona.getDireccion()+"')";
+        boolean flat = false;
+        Statement st = null;
+        String query = "INSERT INTO persona (nombre,apepat,apemat,sexo,dni,celular,direccion)"
+                + " VALUES('" + persona.getNombre() + "',"
+                + "'" + persona.getApepat() + "',"
+                + "'" + persona.getApemat() + "',"
+                + "'" + persona.getSexo() + "',"
+                + "" + persona.getDni() + ","
+                + "" + persona.getCelular() + ","
+                + "'" + persona.getDireccion() + "')";
+        System.out.println(query);
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            
-            cn.conexion().getAutoCommit();
-//            cn.conexion().close();
-            flat=true;
-             } catch (Exception e) {
-                 System.out.println("ERROR:"+e.getMessage());
-                 try {
-                     cn.conexion().rollback();
-//                     cn.conexion().close();
-            } catch (Exception ex) {
-            }
-        }finally{
-            if (cn.conexion() !=null) 
-                try {
-                    cn.conexion().rollback();
-//                    cn.conexion().close();
-                } catch (Exception e) {
-                }
-{
-                
-            }
-                }
-                 return flat;
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
+        }
     }
 
     @Override
-    public boolean eliminarpersona(int id_persona) {
-        boolean flat=false;
-         
-       String query="DELETE FROM persona WHERE id_persona="+id_persona+"";
-       Statement st=null;
+    public boolean eliminarpersona(String id_persona) {
+        boolean flat = false;
+        String query = "DELETE FROM persona WHERE id_persona=" + id_persona + "";
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            cn.guardar();
-//            cn.cerrar();
-            flat=true;
-        } catch (Exception e) {
-            cn.restaurar();
-//            cn.cerrar();
-            System.out.println("ERROR"+e.getMessage());
-        }finally{
-            if (cn.conexion()!=null) {
-                
-             
-//            cn.cerrar();
-                
-            }
+            cn.execC(query);
+            cn.Commit();
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+            return false;
         }
-       
-    return  flat;
+
     }
 
     @Override
     public boolean actualizarpersona(Persona persona) {
-               boolean flat=false;
-      String query="UPDATE persona SET nombre='"+persona.getNombre()+"',apepat='"+persona.getApepat()+"',apemat='"+persona.getApemat()+"',fecha_nac='"+persona.getFecha_nac()+"',sexo='"+persona.getSexo()+"',dni="+persona.getDni()+",celular='"+persona.getCelular()+"',telefono='"+persona.getTelefono()+"',direccion ='"+persona.getDireccion()+"' WHERE id_persona ="+persona.getId_persona()+"";
-        
-        Statement st=null;
+        boolean flat = false;
+        String query = "UPDATE persona SET nombre='" + persona.getNombre()
+                + "',apepat='" + persona.getApepat()
+                + "',apemat='" + persona.getApemat()
+                + "',sexo='" + persona.getSexo()
+                + "',dni='" + persona.getDni()
+                + "',celular='" + persona.getCelular()
+                + "',direccion='" + persona.getDireccion()
+                + "' WHERE id_persona =" + persona.getId_persona() + "";
+
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            cn.guardar();
-//            cn.cerrar();
-            flat=true;
-        } catch (Exception e) {
-            cn.restaurar();
-//            cn.cerrar();
-            System.out.println("ERROR"+e.getMessage());
-        }finally{
-            if (cn.conexion()!=null) {
-//                cn.cerrar();
-            }
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
         }
-        
-         return flat;
     }
 
     @Override
-    public List<Persona> listarpersona() {
-        List<Persona> lista=null;
-        Statement st=null;
-        ResultSet rs=null;
-        Persona per=null;
-        String query="select * from persona";
-        try {
-            lista = new ArrayList<>();
-            st= cn.conexion().createStatement();
-            rs=st.executeQuery(query);
-            while (rs.next()) {
-                
-                per =new Persona();
-                per.setId_persona(rs.getInt("id_persona"));
-                per.setNombre(rs.getString("nombre"));
-                per.setApepat(rs.getString("apepat"));
-                per.setApemat(rs.getNString("apemat"));
-//                per.setFecha_nac(rs.getNString("yyyy-mm-dd"));
-                per.setSexo(rs.getNString("sexo"));
-                per.setDni(rs.getInt("dni"));
-                per.setCelular(rs.getInt("celular"));
-                per.setTelefono(rs.getInt("telefono"));
-                per.setDireccion(rs.getString("direccion"));
-                lista.add(per);
-            }
-//            cn.cerrar();
-        } catch (Exception e) {
-            System.out.println("ERROR:"+e.getMessage());
-            e.printStackTrace();
-//           cn.cerrar();
+    public List<Persona> listarpersona(String buscar) {
+        List<Persona> lista = null;
+        String query = "select per.nombre, per.dni from persona per where "
+                + " UPPER(per.dni) like ('%" + buscar + "%')";
+        System.out.println(query);
+        lista = new ArrayList<Persona>();
+        cn.execQuery(query);
+        while (cn.getNext()) {
+            Persona per= new Persona();
+            per.setId_persona(cn.getCol("id_persona"));
+            per.setNombre(cn.getCol("nombre"));
+            per.setApepat(cn.getCol("apepat"));
+            per.setApemat(cn.getCol("apemat"));
+            per.setSexo(cn.getCol("sexo"));
+            per.setDni(cn.getCol("dni"));
+            per.setCelular(cn.getCol("celular"));
+            per.setDireccion(cn.getCol("direccion"));
+            lista.add(per);
         }
-        return lista;
+    return lista ;
     }
 }
+

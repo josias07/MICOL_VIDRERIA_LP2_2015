@@ -5,16 +5,21 @@ package Beans;
 
 
 public class Venta{
-    private int id_venta;
+    private String id_detalle_venta;
+    private String id_venta;
     private String fecha_venta;
-    private double subtotal;
-    private String serie_factura;
-    private double igv;
-    private double descuento;
-    private double total;
-    private int id_cliente;
-    private int id_usuario;
-    private String hora;
+    private String comprobante;
+    private String serie;
+    private String igv;
+    private String descuento;
+    private String id_cliente;
+    private String id_usuario;
+    private String nombre_usuario;
+    private String nombre_producto;
+    private String  nombre_cliente;
+    private String cantidad;
+    private String precio, total;
+
 
  
  
@@ -22,11 +27,11 @@ public class Venta{
         
     }
 
-    public int getId_venta() {
+    public String getId_venta() {
         return id_venta;
     }
 
-    public void setId_venta(int id_venta) {
+    public void setId_venta(String id_venta) {
         this.id_venta = id_venta;
     }
 
@@ -38,68 +43,109 @@ public class Venta{
         this.fecha_venta = fecha_venta;
     }
 
-    public double getSubtotal() {
-        return subtotal;
+    public String getComprobante() {
+        return comprobante;
     }
 
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
+    public void setComprobante(String comprobante) {
+        this.comprobante = comprobante;
     }
 
-    public String getSerie_factura() {
-        return serie_factura;
+    public String getSerie() {
+        return serie;
     }
 
-    public void setSerie_factura(String serie_factura) {
-        this.serie_factura = serie_factura;
+    public void setSerie(String serie) {
+        this.serie = serie;
     }
 
-    public double getIgv() {
+    public String getIgv() {
         return igv;
     }
 
-    public void setIgv(double igv) {
+    public void setIgv(String igv) {
         this.igv = igv;
     }
 
-    public double getDescuento() {
+    public String getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(double descuento) {
+    public void setDescuento(String descuento) {
         this.descuento = descuento;
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public int getId_cliente() {
+    public String getId_cliente() {
         return id_cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
+    public void setId_cliente(String id_cliente) {
         this.id_cliente = id_cliente;
     }
 
-    public int getId_usuario() {
+    public String getId_usuario() {
         return id_usuario;
     }
 
-    public void setId_usuario(int id_usuario) {
+    public void setId_usuario(String id_usuario) {
         this.id_usuario = id_usuario;
     }
 
-       public String getHora() {
-        return hora;
+    public String getNombre_usuario() {
+        return nombre_usuario;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setNombre_usuario(String nombre_usuario) {
+        this.nombre_usuario = nombre_usuario;
     }
 
+    public String getNombre_producto() {
+        return nombre_producto;
+    }
+
+    public void setNombre_producto(String nombre_producto) {
+        this.nombre_producto = nombre_producto;
+    }
+
+    public String getNombre_cliente() {
+        return nombre_cliente;
+    }
+
+    public void setNombre_cliente(String nombre_cliente) {
+        this.nombre_cliente = nombre_cliente;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getId_detalle_venta() {
+        return id_detalle_venta;
+    }
+
+    public void setId_detalle_venta(String id_detalle_venta) {
+        this.id_detalle_venta = id_detalle_venta;
+    }
+
+    
 }

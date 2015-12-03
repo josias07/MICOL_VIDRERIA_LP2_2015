@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ProductosDao {
     public boolean agregarproducto(Productos productos);
-    public boolean eliminarproducto(int id_productos);
+    public boolean eliminarproducto(String id_productos);
     public boolean actualizarproducto(Productos productos);
-    public List<Productos> listarproductos();
-    public List<Productos> repor_producto(String buscar);
+    public List<Productos> listarproductos(String buscar, String limit);
+     public Productos DatosProductos(String id_productos); 
 }

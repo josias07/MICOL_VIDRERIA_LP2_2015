@@ -1,188 +1,142 @@
-
 package DaoImpl;
 
 import Dao.ProductosDao;
 import Beans.Productos;
 import conexion.Conexion;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import conexion.Configuracion;
 import java.util.ArrayList;
 import java.util.List;
 
+public class ProductosDaoImpl implements ProductosDao {
 
-public class ProductosDaoImpl implements ProductosDao{
-//conexionMYSQL cn = new conexionMYSQL();
-    Conexion cn = Conexion.getInstance();
+    Conexion cn = Configuracion.Vidreria();
+
     @Override
     public boolean agregarproducto(Productos productos) {
-    boolean flat=false;
-    Statement st=null;
-    String query="INSERT INTO productos (nombre,cantidad, precio, descripcion, id_categoria_prod, id_unidad_medida)"
-            + " VALUES ('"+productos.getNombre()+"','"+productos.getCantidad()+"','"+productos.getPrecio()+"','"+productos.getDescripcion()+"','"+productos.getId_categoria_prod()+"','"+productos.getId_unidad_medida()+"')";
-        try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            
-            cn.conexion().getAutoCommit();
-//            cn.conexion().close();
-            flat=true;
-             } catch (Exception e) {
-                 System.out.println("ERROR:"+e.getMessage());
-                 System.out.println("query"+query);
-                 try {
-                     cn.conexion().rollback();
-//                     cn.conexion().close();
-            } catch (Exception ex) {
-            }
-        }finally{
-            if (cn.conexion() !=null) 
-                try {
-                    cn.conexion().rollback();
-//                    cn.conexion().close();
-                } catch (Exception e) {
-                }
 
-                }
-                 return flat;
+        String query = "INSERT INTO productos (nombre,cantidad, precio, descripcion,"
+                + " id_categoria_prod, id_unidad_medida)"
+                + " VALUES ('" + productos.getNombre() + "',"
+                + "" + productos.getCantidad() + ","
+                + "" + productos.getPrecio() + ","
+                + "'" + productos.getDescripcion() + "',"
+                + "" + productos.getId_categoria_prod() + ","
+                + "" + productos.getId_unidad_medida()+")";
+
+        System.out.println(query);
+        try {
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
+        }
     }
 
     @Override
-    public boolean eliminarproducto(int id_productos) {  
-    boolean flat=false;
-    String query="DELETE FROM productos WHERE id_productos="+id_productos+"";
-    Statement st=null;
+    public boolean eliminarproducto(String id_productos) {
+        boolean flat = false;
+        String query = "DELETE FROM productos WHERE id_productos=" + id_productos + "";
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            cn.guardar();
-//            cn.cerrar();
-            flat=true;
-        } catch (Exception e) {
-            cn.restaurar();
-//            cn.cerrar();
-            System.out.println("ERROR"+e.getMessage());
-        }finally{
-            if (cn.conexion()!=null) {
-//            cn.cerrar();
-                
-            }
+            cn.execC(query);
+            cn.Commit();
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+            return false;
         }
-       
-    return  flat;
     }
 
     @Override
     public boolean actualizarproducto(Productos productos) {
-    boolean flat=false;
-    String query="UPDATE productos SET nombre='"+productos.getNombre()+"',id_categoria_prod='"+productos.getId_categoria_prod()+"',cantidad='"+productos.getCantidad()+"',precio='"+productos.getPrecio()+"',descripcion='"+productos.getDescripcion()+"',id_unidad_medida='"+productos.getId_unidad_medida()+"' WHERE id_productos ="+productos.getId_productos()+"";
-        
-        Statement st=null;
+        boolean flat = false;
+        String query = "UPDATE productos SET nombre='" + productos.getNombre() + "',"
+                + "id_categoria_prod='" + productos.getId_categoria_prod() + "',"
+                + "cantidad='" + productos.getCantidad() + "',"
+                + "precio='" + productos.getPrecio() + "',"
+                + "descripcion='" + productos.getDescripcion() + "',"
+                + "id_unidad_medida='" + productos.getId_unidad_medida()
+                + "' WHERE id_productos =" + productos.getId_productos();
+
         try {
-            st=cn.conexion().createStatement();
-            st.executeUpdate(query);
-            cn.guardar();
-//            cn.cerrar();
-            flat=true;
-        } catch (Exception e) {
-            cn.restaurar();
-//            cn.cerrar();
-            System.out.println("ERROR"+e.getMessage());
-        }finally{
-            if (cn.conexion()!=null) {
-//                cn.cerrar();
-            }
+            cn.execC(query);
+            cn.Commit();
+
+            return true;
+        } catch (Exception EX) {
+            cn.RollBack();
+
+            return false;
         }
-        
-         return flat;
     }
 
     @Override
-    public List<Productos> listarproductos() {
-    List<Productos> lista=null;
-    Statement st=null;
-    ResultSet rs=null;
-    Productos prod=null;
-        String query="select * from productos";
-        try {
-            lista = new ArrayList<>();
-            st= cn.conexion().createStatement();
-            rs=st.executeQuery(query);
-            while (rs.next()) {
-                
-            prod =new Productos();
-            prod.setId_productos(rs.getInt("id_productos"));
-            prod.setNombre(rs.getString("nombre"));
-            prod.setId_categoria_prod(rs.getInt("id_categoria_prod"));
-            prod.setCantidad(rs.getInt("cantidad"));
-            prod.setPrecio(rs.getDouble("precio"));
-            prod.setDescripcion(rs.getNString("descripcion"));
-            prod.setId_unidad_medida(rs.getInt("id_unidad_medida"));
-            lista.add(prod);
-            }
-//            cn.cerrar();
-        } catch (Exception e) {
-            System.out.println("ERROR:"+e.getMessage());
-            e.printStackTrace();
-//           cn.cerrar();
+    public List<Productos> listarproductos(String buscar, String limit) {
+        List<Productos> lista = null;
+        String query = "select "
+                + " pro.id_productos,"
+                + " pro.nombre,"
+                + " pro.precio,"
+                + " pro.cantidad,"
+                + " cat.nombre_categoria nombre_categoria,"
+                + " uni.nombre_uni nombre_medida,"
+                + " pro.descripcion"
+                + " from productos pro,"
+                + " categoria_prod cat, "
+                + " unidad_medida uni "
+                + " where "
+                + " cat.id_categoria_prod=pro.id_categoria_prod and "
+                + " uni.id_unidad_medida=pro.id_unidad_medida and"
+                + " UPPER(pro.nombre) like ('%" + buscar + "%')"
+                + " order by pro.id_productos"
+                + " limit " + limit;
+        System.out.println(query);
+        lista = new ArrayList<Productos>();
+        cn.execQuery(query);
+        while (cn.getNext()) {
+            Productos p = new Productos();
+            p.setId_productos(cn.getCol("id_productos"));
+            p.setNombre(cn.getCol("nombre"));
+            p.setPrecio(cn.getCol("precio"));
+            p.setCantidad(cn.getCol("cantidad"));
+            p.setNombre_categoria(cn.getCol("nombre_categoria"));
+            p.setNombre_medida(cn.getCol("nombre_medida"));
+            p.setDescripcion(cn.getCol("descripcion"));
+            lista.add(p);
         }
+
         return lista;
     }
 
-//    @Override
-//    public List<Productos> repor_producto(String buscar) {
-//    List<Productos> lista = null;
-//        String query = "select "
-//                + " pr.id_producto,"
-//                + " pr.codigo,"
-//                + " pr.nombre,"
-//                + " cat.nombre nombre_categoria,"
-//                + " pr.presentacion,"
-//                + " pr.marca,"
-//                + " pr.modelo,"
-//                + " um.nombre nombre_unidad_medida,"
-//                + " pr.precio_compra,"
-//                + " case pr.estado "
-//                + " when '1' then 'Activo' "
-//                + " else 'Desactivo' "
-//                + " end estado "
-//                + " from producto pr,"
-//                + " categoria cat, "
-//                + " unidad_medida um "
-//                + " where "
-//                + " pr.id_categoria=cat.id_categoria and "
-//                + " pr.id_unidad_medida=um.id_unidad_medida and "
-//                + " UPPER(pr.nombre) like ('%" + buscar + "%')"
-//                + " order by pr.nombre"
-//                + " limit "+limit;
-//        System.out.println(query);
-//        lista = new ArrayList<Productos>();
-//        cn.execQuery(query);
-//        while (cn.getNext()) {
-//
-//            Productos p = new Productos();
-//            p.setId_producto(cn.getCol("id_producto"));
-//            p.setCodigo(cn.getCol("codigo"));
-//            p.setNombre(cn.getCol("nombre"));
-//            p.setNombre_categoria(cn.getCol("nombre_categoria"));
-//            p.setPresentacion(cn.getCol("presentacion"));
-//            p.setMarca(cn.getCol("marca"));
-//            p.setModelo(cx.getCol("modelo"));
-//            p.setNombre_unidad_medida(cx.getCol("nombre_unidad_medida"));
-//            p.setPrecio_compra(cx.getCol("precio_compra"));
-//            p.setEstado(cx.getCol("estado"));
-//            lista.add(p);
-//        }
-//        return lista;
-//    
-    
-//    }
-//    
-
     @Override
-    public List<Productos> repor_producto(String buscar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-  
-    
-    
+    public Productos DatosProductos(String id_productos) {
+
+        String query = "select "
+                + " id_productos,"
+                + " nombre,"
+                + " cantidad,"
+                + " precio,"
+                + " descripcion,"
+                + " id_categoria_prod, "
+                + " id_unidad_medida "
+                + " from productos "
+                + " where id_productos=" + id_productos;
+        System.out.println(query);
+        Productos prod = new Productos();
+        cn.execQuery(query);
+        cn.getNext();
+        prod.setId_productos(cn.getCol("id_productos"));
+        prod.setNombre(cn.getCol("nombre"));
+        prod.setId_categoria_prod(cn.getCol("id_categoria_prod"));
+        prod.setCantidad(cn.getCol("cantidad"));
+        prod.setPrecio(cn.getCol("precio"));
+        prod.setDescripcion(cn.getCol("descripcion"));
+        prod.setId_unidad_medida(cn.getCol("id_unidad_medida"));
+            
+        return prod;
+       }
 }
+
